@@ -1,13 +1,10 @@
 module MoeLia
+  # Using/Imports
 
-struct Solutions
-  first_frontier::Array{AbstractFloat,1}
-  second_frontier::Array{AbstractFloat,1}
-  third_frontier::Array{AbstractFloat,1}
-end # chiedere quali tipi di soluzioni possono esistere
+  # Exports
+  export GeneticPipeline
 
-struct Algorithm
-  result::Solutions
-end
+  # Include
+  include("genetic_pipeline/GeneticPipeline.jl")
 
 end # module MoeLia
