@@ -2,9 +2,9 @@ module MoeLia
   # Using/Imports
 
   # Exports
-  export GeneticPipeline
+  export MoeliaPipeline
 
   # Include
-  include("genetic_pipeline/GeneticPipeline.jl")
+  include("moelia_pipeline/MoeliaPipeline.jl")
 
 end # module MoeLia
