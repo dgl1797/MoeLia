@@ -1,19 +1,18 @@
 using MoeLia.MoeliaPipeline
+using MoeLia.PopulationHandlers
+using MoeLia.Mutators
 
-include("algos/researcher_library.jl")
+include("./algos/researcher_library.jl")
 
-function step1_function(x::Array{Float64, 3}, param::Int8)
-  println("Im step1, will execute $x+1+$param")
-  return x .+ 1 .+ param
-end
-
-function step2_function(x::Array{Float64, 3}, param::Int64)
-  println("Im step2, will execute $x*$param")
-  return x .* param
-end
+population = PopulationHandlers.random_initializer(Int8(5))
 
 mypipeline = MoeliaPipeline.init_pipeline()
-MoeliaPipeline.add_step!(mypipeline, "step1", step1_function, Int8(8))
-MoeliaPipeline.add_step!(mypipeline, "step2", step2_function, 12)
 
-outputs = MoeliaPipeline.run_pipeline(mypipeline, zeros(5,5,5))
+MoeliaPipeline.add_step!(mypipeline, "mutate", Mutators.classic_mutator)
+MoeliaPipeline.add_step!(mypipeline, "unite", x -> vcat(mypipeline.inputs[1].data, x))
+MoeliaPipeline.add_step!(mypipeline, "core", ResearcherLibrary.my_genetic_algorithm, ResearcherLibrary.myobjective)
+MoeliaPipeline.add_step!(mypipeline, "adjustments", (x,param) -> x .+ (1*param), 12)
+
+result = MoeliaPipeline.inspect(mypipeline, Vector{Float64})
+
+println(result)

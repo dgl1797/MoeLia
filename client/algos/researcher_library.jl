@@ -1,5 +1,11 @@
 module ResearcherLibrary
-  function my_algorithm(param1::String, param2::Float64)
-    println("configured my_algorithm with -> $param1:$param2")
+  function myobjective(population::Vector{Float64})
+    return population .- 1
+  end
+
+  function my_genetic_algorithm(population::Vector{Float64}, objective::Function)::Array{Float64, 5}
+    fitness = objective(population)
+    fitness = sort(fitness)
+    return fitness[1:5]
   end
 end
