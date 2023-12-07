@@ -1,6 +1,6 @@
 export Functions 
 module Functions
 
-  using Moelia 
+  using MoeLia 
   
 end
