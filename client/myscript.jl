@@ -14,5 +14,14 @@ MoeliaPipeline.add_step!(mypipeline, "core", ResearcherLibrary.my_genetic_algori
 MoeliaPipeline.add_step!(mypipeline, "adjustments", (x,param) -> x .+ (1*param), 12)
 
 result = MoeliaPipeline.inspect(mypipeline, Vector{Float64})
+println(result)
 
+MoeliaPipeline.substitute!(mypipeline,"adjustments","try_again_mutator",Mutators.classic_mutator)
+
+result = MoeliaPipeline.inspect(mypipeline, Vector{Float64})
+println(result)
+
+MoeliaPipeline.substitute!(mypipeline,4,"new_step",(x,param,param2) -> x .+ (1*param-param2),12,0.5)
+
+result = MoeliaPipeline.inspect(mypipeline, Vector{Float64})
 println(result)

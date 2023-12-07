@@ -70,6 +70,31 @@ module MoeliaPipeline
   end
 
   """
+    Allows to substitute a specific step of a pipeline, suggested for small changes in existing one.\n
+    \t @arg pipe::MoeliaTypes.MPipe -> The pipeline to update
+    \t @arg step_to_susbsitute::Union{Int8,Int32,Int64,String} -> Allow to search the action through the name or the related index
+    \t @arg new_name::String -> Expected name for the new action
+    \t @arg new_action::Function -> Function related to the new step, it can be also anonymous 
+    \t params::Any -> Optional parameters\n
+    EXAMPLE OF USAGE:\n
+    \t MoeliaPipeline.add_step!(mypipeline, "core", ResearcherLibrary.my_genetic_algorithm, ResearcherLibrary.myobjective)
+    \t MoeliaPipeline.add_step!(mypipeline, "adjustments", (x,param) -> x .+ (1*param), 12)
+    \t MoeliaPipeline.substitute!(mypipeline,"adjustments","new_adjustments",(x,param,param2) -> x .+ (1*param-param2),12,0.5)\n
+    \t Note that consistency between inputs and outputs between steps must be maintained, to see the specific pipeline's action see inspect function\n
+  """
+  function substitute!(pipe::MoeliaTypes.MPipe,step_to_susbsitute::Union{Int8,Int32,Int64,String},new_name::String,new_action::Function,params...)
+    if isa(step_to_susbsitute, Int8) || isa(step_to_susbsitute, Int32) || isa(step_to_susbsitute, Int64)
+      pipe.mpipe[step_to_susbsitute]  = (new_name,new_action,params)
+    else
+      index = findfirst(x -> x[1] == step_to_susbsitute, pipe.mpipe)
+      if index != nothing
+        pipe.mpipe[index] = (new_name,new_action,params)
+      else
+        throw("no action matched")
+      end
+    end
+  end
+  """
     runs a configured pipeline\n
     \t@arg pipeline::MoeliaTypes.MPipe -> the configured pipeline to run
     \t@arg startingInputs::MoeliaTypes.MInputs -> inputs that will be forwarded through the pipeline
