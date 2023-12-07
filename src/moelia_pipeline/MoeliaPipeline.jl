@@ -12,6 +12,10 @@ module MoeliaPipeline
     return MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
   end
 
+  function is_empty(pipe::MoeliaTypes.MPipe)::Bool
+    return isempty(pipe.mpipe)
+  end
+
   """
     pushes a new action to be performed in the pipeline. Actions are executed in the same order they are inserted
     and their output type needs to be coherent with the next step's input type\n
@@ -75,25 +79,51 @@ module MoeliaPipeline
     \t @arg step_to_susbsitute::Union{Int8,Int32,Int64,String} -> Allow to search the action through the name or the related index
     \t @arg new_name::String -> Expected name for the new action
     \t @arg new_action::Function -> Function related to the new step, it can be also anonymous 
-    \t params::Any -> Optional parameters\n
+    \t params::Any -> Optional parameters of the new action\n
     EXAMPLE OF USAGE:\n
     \t MoeliaPipeline.add_step!(mypipeline, "core", ResearcherLibrary.my_genetic_algorithm, ResearcherLibrary.myobjective)
     \t MoeliaPipeline.add_step!(mypipeline, "adjustments", (x,param) -> x .+ (1*param), 12)
     \t MoeliaPipeline.substitute!(mypipeline,"adjustments","new_adjustments",(x,param,param2) -> x .+ (1*param-param2),12,0.5)\n
-    \t Note that consistency between inputs and outputs between steps must be maintained, to see the specific pipeline's action see inspect function\n
+    Note that consistency between inputs and outputs between steps must be maintained, to see the specific pipeline's 
+    action see inspect function. Often used with clone_pipeline to allow creation of different versions of a pipeline
+    \t
   """
   function substitute!(pipe::MoeliaTypes.MPipe,step_to_susbsitute::Union{Int8,Int32,Int64,String},new_name::String,new_action::Function,params...)
     if isa(step_to_susbsitute, Int8) || isa(step_to_susbsitute, Int32) || isa(step_to_susbsitute, Int64)
       pipe.mpipe[step_to_susbsitute]  = (new_name,new_action,params)
     else
       index = findfirst(x -> x[1] == step_to_susbsitute, pipe.mpipe)
-      if index != nothing
-        pipe.mpipe[index] = (new_name,new_action,params)
-      else
-        throw("no action matched")
-      end
+      pipe.mpipe[index] = index !== nothing ? (new_name,new_action,params) : throw("no action matched")
     end
   end
+
+  """
+    Allows to generate a deep clone of a pipeline for which is possible to substitute some steps to have two different pipes
+    of execution.\n
+    \t@arg pipe::MoeliaTypes.Mpipe -> the pipeline to be cloned
+    \t@returns a ::MoeliaTypes.Mpipe object representing the cloned pipeline\n
+    EXAMPLE OF USAGE:\n
+    \t MoeliaPipeline.add_step!(mypipeline, "core", ResearcherLibrary.my_genetic_algorithm, ResearcherLibrary.myobjective)
+    \t MoeliaPipeline.add_step!(mypipeline, "adjustments", (x,param) -> x .+ (1*param), 12)
+    \t cloned_pipeline = MoeliaPipeline.clone_pipeline(mypipeline)
+    \t MoeliaPipeline.substitute!(cloned_pipeline,"adjustments","new_adjustments",(x,param,param2) -> x .+ (1*param-param2),12,0.5)
+    \t mypipeline:
+    \t\t [1 -> core]: my_genetic_algorithm(::Vector{Float64} + [Function])::Array{Float64, 5}
+    \t\t [2 -> adjustments]: Anonymous Function(::Array{Float64, 5} + [Int64])::Array{Float64, 5}
+    \t cloned_pipeline:
+    \t\t [1 -> core]: my_genetic_algorithm(::Vector{Float64} + [Function])::Array{Float64, 5}
+    \t\t [2 -> new_adjustments]: Anonymous Function(::Array{Float64, 5} + [Int64, Float64])::Array{Float64, 5}
+    \t
+  """
+  function clone_pipeline(pipe::MoeliaTypes.MPipe)::MoeliaTypes.MPipe
+    newpipe = MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
+    if is_empty(pipe) return newpipe end
+    for (Name, Action, Params) in pipe.mpipe
+      push!(newpipe.mpipe, (Name, Action, Params))
+    end
+    return newpipe
+  end
+
   """
     runs a configured pipeline\n
     \t@arg pipeline::MoeliaTypes.MPipe -> the configured pipeline to run

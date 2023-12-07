@@ -21,7 +21,8 @@ MoeliaPipeline.substitute!(mypipeline,"adjustments","try_again_mutator",Mutators
 result = MoeliaPipeline.inspect(mypipeline, Vector{Float64})
 println(result)
 
-MoeliaPipeline.substitute!(mypipeline,4,"new_step",(x,param,param2) -> x .+ (1*param-param2),12,0.5)
+new_pipeline = MoeliaPipeline.clone_pipeline(mypipeline)
+MoeliaPipeline.substitute!(new_pipeline,4,"new_step",(x,param,param2) -> x .+ (1*param-param2),12,0.5)
 
-result = MoeliaPipeline.inspect(mypipeline, Vector{Float64})
+result = MoeliaPipeline.inspect(new_pipeline, Vector{Float64})
 println(result)
