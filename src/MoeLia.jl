@@ -3,12 +3,18 @@ module MoeLia
 
   # Exports
   export MoeliaPipeline
-  export PopulationHandlers
-  export Mutators
+  export Functions
+  export Implementations
+  export Runners
+  export MoeliaAlgorithm
+  export MoeliaProblem
 
   # Include
+  include("functions/Functions.jl")
+  include("implementations/Implementations.jl")
+  include("runners/Runners.jl")
   include("moelia_pipeline/MoeliaPipeline.jl")
-  include("population_handlers/PopulationHandlers.jl")
-  include("mutators/Mutators.jl")
+  include("moelia_algorithms/MoeliaAlgorithm.jl")
+  include("moelia_problems/MoeliaProblem.jl")
 
 end # module MoeLia
