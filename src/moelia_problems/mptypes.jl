@@ -2,7 +2,7 @@ module MoeliaProblemTypes
 
   struct MPT
     objective_functions::Vector{Function} 
-    objective_variables::Vector{Number}
+    bounds::Vector{Tuple{Number,Number}}
     max_iteration::Int64
   end
 
