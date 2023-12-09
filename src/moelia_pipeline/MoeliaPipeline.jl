@@ -132,11 +132,11 @@ module MoeliaPipeline
     \t@throws errors when steps output are incompatible with next inputs
     \t
   """
-  function run_pipeline(pipe::MoeliaTypes.MPipe, x::Any)::Any
+  function run_pipeline(pipe::MoeliaTypes.MPipe, x::AbstractArray)::AbstractArray
     for (_, action, args) in pipe.mpipe
-      push!(pipe.inputs, MoeliaTypes.MData{typeof(x)}(x))
+      push!(pipe.inputs, MoeliaTypes.MData(x))
       x = action(x, args...)
-      push!(pipe.outputs, MoeliaTypes.MData{typeof(x)}(x))
+      push!(pipe.outputs, MoeliaTypes.MData(x))
     end
     return x
   end
