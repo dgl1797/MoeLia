@@ -1,12 +1,9 @@
-myvec = [(-4,4),(-4,4),(-4,4)]
+function example(pop::AbstractArray)::AbstractArray
+  mypopulation = Vector{typeof(pop[1, :])}[]
+  for i in 1:3
+    push!(mypopulation, rand(1,5))
+  end 
+  return mypopulation
+end
 
-mypop = rand(Float64, 10,3)
-
-lower_bounds = [b[1] for b in myvec]
-upper_bounds = [b[2] for b in myvec]
-
-println("before:")
-mypop
-
-println("after:")
-map(chromosome -> lower_bounds .+ chromosome .* (upper_bounds .- lower_bounds), mypop)
+example(rand(20,5))

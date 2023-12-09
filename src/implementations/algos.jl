@@ -4,11 +4,12 @@ module Algos
   include("../moelia_algorithms/matypes.jl")
   include("../moelia_pipeline/mtypes.jl")
   include("../functions/populators/Populators.jl")
+  include("../functions/crossovers/Crossovers.jl")
 
   function nr_nsga2(problem::MoeliaProblemTypes.MPT, pop_size::Int64)::MoeliaAlgoTypes.MAT
     # TODO completare
     apipeline = MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[
-      ("crossover", action, params),
+      ("crossover", Crossovers.single_point, 0.4, pop_size, problem.nvar),
       ("mutation", action, params),
       ("local search", action, params),
       ("evaluation", action, params),
