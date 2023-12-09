@@ -1,9 +1,12 @@
-function init_problem(NOBJ::Int64, NVAR::Int64)
-  return (
-    Vector{Function}(undef, NOBJ),
-    Vector{Tuple{Number, Number}}(undef, NVAR),
-    -1
-  )
-end
+myvec = [(-4,4),(-4,4),(-4,4)]
 
-init_problem(3, 6)
+mypop = rand(Float64, 10,3)
+
+lower_bounds = [b[1] for b in myvec]
+upper_bounds = [b[2] for b in myvec]
+
+println("before:")
+mypop
+
+println("after:")
+map(chromosome -> lower_bounds .+ chromosome .* (upper_bounds .- lower_bounds), mypop)

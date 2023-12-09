@@ -10,8 +10,8 @@ module MoeliaAlgoTypes
     struct MAT
       population_initializer::Function
       initializer_parameters::Any
-
       algorithm_pipeline::MoeliaTypes.MPipe
       problem::MoeliaProblemTypes.MPT
+      pop_size::Int64
     end
 end

@@ -8,6 +8,7 @@ module MoeliaProblem
     return MoeliaProblemTypes.MPT(
       Vector{Function}(undef, NOBJ),
       Vector{Tuple{Number, Number}}(undef, NVAR),
+      NVAR,
       -1
     )
   end
@@ -22,6 +23,7 @@ module MoeliaProblem
     for (i, b) in enumerate(boundaries)
       problem.bounds[i] = b
     end
+    problem.nvar = length(problem.bounds)
   end
 
   function set_niterations!(problem::MoeliaProblemTypes.MPT, n::Int64)
