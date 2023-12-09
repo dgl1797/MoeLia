@@ -8,7 +8,11 @@ module Algos
   function nr_nsga2(problem::MoeliaProblemTypes.MPT, pop_size::Int64)::MoeliaAlgoTypes.MAT
     # TODO completare
     apipeline = MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[
-      ("step", action, params),
+      ("crossover", action, params),
+      ("mutation", action, params),
+      ("local search", action, params),
+      ("evaluation", action, params),
+      ("selection", action, params)
     ], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
 
     return MoeliaAlgoTypes.MAT(

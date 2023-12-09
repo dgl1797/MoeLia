@@ -7,7 +7,7 @@ module MoeliaProblem
   function init_problem(NOBJ::Int64, NVAR::Int64)::MoeliaProblemTypes.MPT
     return MoeliaProblemTypes.MPT(
       Vector{Function}(undef, NOBJ),
-      Vector{Tuple{Number, Number}}(undef, NVAR),
+      Vector{Tuple{<: Real,<: Real}}(undef, NVAR),
       NVAR,
       -1
     )
@@ -19,7 +19,7 @@ module MoeliaProblem
     end
   end
 
-  function set_boundaries!(problem::MoeliaProblemTypes.MPT, boundaries::Tuple{Number, Number}...)
+  function set_boundaries!(problem::MoeliaProblemTypes.MPT, boundaries::Tuple{<: Real,<: Real}...)
     for (i, b) in enumerate(boundaries)
       problem.bounds[i] = b
     end
