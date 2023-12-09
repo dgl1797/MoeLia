@@ -7,7 +7,7 @@ module MoeliaProblem
   function init_problem(NOBJ::Int64, NVAR::Int64)::MoeliaProblemTypes.MPT
     return MoeliaProblemTypes.MPT(
       Vector{Function}(undef, NOBJ),
-      Vector{Vector{MoeliaProblemTypes.Boundary}}(undef, NVAR),
+      Vector{Tuple{Number, Number}}(undef, NVAR),
       -1
     )
   end

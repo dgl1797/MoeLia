@@ -1,5 +1,9 @@
-function testingFunction(args::Tuple{Vararg{Int64,6}})
-  return args
+function init_problem(NOBJ::Int64, NVAR::Int64)
+  return (
+    Vector{Function}(undef, NOBJ),
+    Vector{Tuple{Number, Number}}(undef, NVAR),
+    -1
+  )
 end
 
-testingFunction((1,2,3,4,5,6))
+init_problem(3, 6)
