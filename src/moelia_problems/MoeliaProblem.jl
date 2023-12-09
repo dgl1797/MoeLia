@@ -18,7 +18,7 @@ module MoeliaProblem
     end
   end
 
-  function set_boundaries!(problem::MoeliaProblemTypes.MPT, boundaries::Vector{MoeliaProblemTypes.Boundary}...)
+  function set_boundaries!(problem::MoeliaProblemTypes.MPT, boundaries::Tuple{Number, Number}...)
     for (i, b) in enumerate(boundaries)
       problem.bounds[i] = b
     end
