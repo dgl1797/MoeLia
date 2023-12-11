@@ -15,6 +15,12 @@ module MoeLia
   export MoeliaProblemTypes
   export MoeliaTypes
 
+  # Include Types
+  include("moelia_pipeline/mtypes.jl")
+  include("moelia_problems/mptypes.jl")
+  include("moelia_algorithms/matypes.jl")
+
+
   # Include APIs
   include("functions/Functions.jl")
   include("implementations/Implementations.jl")
@@ -23,10 +29,5 @@ module MoeLia
   include("moelia_algorithms/MoeliaAlgorithm.jl")
   include("moelia_problems/MoeliaProblem.jl")
   include("implementations/algos.jl")
-  
-  # Include Types
-  include("moelia_algorithms/matypes.jl")
-  include("moelia_pipeline/mtypes.jl")
-  include("moelia_problems/mptypes.jl")
 
 end # module MoeLia
