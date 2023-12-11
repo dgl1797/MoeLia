@@ -1,6 +1,8 @@
 module MoeLia
   # Using/Imports
-
+  using Pkg
+  Pkg.add("Random")
+  Pkg.add("Dates")
   # Export APIs
   export MoeliaPipeline
   export Functions
@@ -18,8 +20,7 @@ module MoeLia
   # Include Types
   include("moelia_pipeline/mtypes.jl")
   include("moelia_problems/mptypes.jl")
-  include("moelia_algorithms/matypes.jl")
-
+  
 
   # Include APIs
   include("functions/Functions.jl")
