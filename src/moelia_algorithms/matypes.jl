@@ -1,11 +1,11 @@
+export MoeliaAlgoTypes
 module MoeliaAlgoTypes
+
+    using MoeLia
 
     #inizializzazione: population
     #terminazione: max iteration, fitness treshold 
     #pipeline: algoritmo a step 
-
-    include("../moelia_pipeline/mtypes.jl")
-    include("../moelia_problems/mptypes.jl")
 
     mutable struct MAT
       population_initializer::Function

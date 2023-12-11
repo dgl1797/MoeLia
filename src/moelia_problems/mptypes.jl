@@ -1,3 +1,4 @@
+export MoeliaProblemTypes
 module MoeliaProblemTypes
   
   mutable struct MPTParams

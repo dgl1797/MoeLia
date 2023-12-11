@@ -1,3 +1,4 @@
+export MoeliaTypes
 module MoeliaTypes
     #= 
       IF we need to sort names, Dictionary is better IDEA: array with sorted names, 

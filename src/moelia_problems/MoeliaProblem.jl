@@ -2,8 +2,6 @@ export MoeliaProblem
 module MoeliaProblem
   using MoeLia
 
-  include("./mptypes.jl")
-
   function init_problem(NOBJ::Int64, NVAR::Int64)::MoeliaProblemTypes.MPT
     return MoeliaProblemTypes.MPT(
       Vector{Function}(undef, NOBJ),

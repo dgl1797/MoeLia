@@ -2,9 +2,7 @@ export Populators
 module Populators
 
   using MoeLia
-
-  include("../../moelia_problems/mptypes.jl")
-
+  
   function random_initializer(problem::MoeliaProblemTypes.MPT, pop_size::Int64)::AbstractArray
     lower_bounds = [b[1] for b in problem.bounds]
     upper_bounds = [b[2] for b in problem.bounds]

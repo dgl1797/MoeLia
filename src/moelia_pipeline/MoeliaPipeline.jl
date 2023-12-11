@@ -6,8 +6,6 @@ module MoeliaPipeline
   =#
   using MoeLia
   
-  include("mtypes.jl")
-
   function init_pipeline()::MoeliaTypes.MPipe
     return MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
   end
