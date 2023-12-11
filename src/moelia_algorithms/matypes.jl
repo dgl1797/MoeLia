@@ -7,7 +7,7 @@ module MoeliaAlgoTypes
     include("../moelia_pipeline/mtypes.jl")
     include("../moelia_problems/mptypes.jl")
 
-    struct MAT
+    mutable struct MAT
       population_initializer::Function
       initializer_parameters::Any
       algorithm_pipeline::MoeliaTypes.MPipe
