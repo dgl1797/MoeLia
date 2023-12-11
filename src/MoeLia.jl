@@ -16,9 +16,9 @@ module MoeLia
   export MoeliaTypes
 
   # Include Types
-  include("moelia_algorithms/matypes.jl")
   include("moelia_pipeline/mtypes.jl")
   include("moelia_problems/mptypes.jl")
+  include("moelia_algorithms/matypes.jl")
   
 
   # Include APIs

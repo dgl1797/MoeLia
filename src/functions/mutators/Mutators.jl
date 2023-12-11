@@ -18,7 +18,7 @@ module Mutators
       push!(offspring, mutated_chromosome)
     end
 
-    return offspring
+    return offspring = hcat(offspring...)'
 
   end
 

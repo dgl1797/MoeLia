@@ -12,11 +12,12 @@ MoeliaProblem.set_niterations!(myproblem, 150)
 population = Functions.Populators.random_initializer(myproblem, 2)
 mypipe = MoeliaPipeline.init_pipeline()
 MoeliaPipeline.add_step!(mypipe, "crossover", Functions.Crossovers.single_point, 0.9)
-MoeliaPipeline.add_step!(mypipe, "mutation", Functions.Mutators.one_position, 0.5, myproblem.bounds)
+MoeliaPipeline.add_step!(mypipe, "mutation", Functions.Mutators.one_position, 0.99, myproblem.bounds)
 
 MoeliaPipeline.run_pipeline(mypipe,population)
 
 
+println(mypipe.outputs[2].data)
 println(size(mypipe.outputs[2].data))
 
 

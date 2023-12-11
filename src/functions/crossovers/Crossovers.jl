@@ -2,6 +2,7 @@ export Crossovers
 module Crossovers
 
   using MoeLia
+  using Random, Dates
   function single_point(population::AbstractArray, crossover_rate::Float64)::AbstractArray
     Random.seed!(convert(Int64,Dates.datetime2unix(Dates.now())*1000))
     println(population)
@@ -30,6 +31,7 @@ module Crossovers
     end
     offspring = vcat(offspring'...)
     println(offspring)
+    println(size(offspring))
     return offspring
   end
   
