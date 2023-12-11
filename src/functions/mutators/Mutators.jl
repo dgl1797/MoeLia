@@ -9,7 +9,10 @@ module Mutators
     if pop_size <= 0 || nvar <= 0 throw("invalid population") end
     offspring = Vector{Float64}[]
     for i in 1:pop_size
-      if rand()>mutation_rate continue end
+      if rand()>mutation_rate
+        push!(offspring, population[i, :])
+        continue
+      end
       mutated_index = rand(1:nvar)
       lb, hb = bounds[mutated_index] 
       mutated_value = lb + rand(Float64) * (hb - lb)

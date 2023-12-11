@@ -12,8 +12,8 @@ MoeliaProblem.set_niterations!(myproblem, 150)
 population = Functions.Populators.random_initializer(myproblem, 2)
 mypipe = MoeliaPipeline.init_pipeline()
 MoeliaPipeline.add_step!(mypipe, "crossover", Functions.Crossovers.single_point, 0.9)
-MoeliaPipeline.add_step!(mypipe, "mutation", Functions.Mutators.one_position, 0.99, myproblem.bounds)
-MoeliaPipeline.add_step!(mypipe, "concatenatePQ", (p, q) -> hcat(p, q))
+MoeliaPipeline.add_step!(mypipe, "mutation", Functions.Mutators.one_position, 0.6, myproblem.bounds)
+#MoeliaPipeline.add_step!(mypipe, "concatenatePQ", (p, q) -> hcat(p, q))
 
 MoeliaPipeline.run_pipeline(mypipe,population)
 
