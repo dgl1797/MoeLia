@@ -13,14 +13,13 @@ population = Functions.Populators.random_initializer(myproblem, 2)
 mypipe = MoeliaPipeline.init_pipeline()
 MoeliaPipeline.add_step!(mypipe, "crossover", Functions.Crossovers.single_point, 0.9)
 MoeliaPipeline.add_step!(mypipe, "mutation", Functions.Mutators.one_position, 0.6, myproblem.bounds)
-#MoeliaPipeline.add_step!(mypipe, "concatenatePQ", (p, q) -> hcat(p, q))
+MoeliaPipeline.add_step!(mypipe, "concatenatePQ", (p) -> vcat(p, mypipe.inputs[1].data ,mypipe.outputs[2].data))
 
 MoeliaPipeline.run_pipeline(mypipe,population)
-
-
+println(population)
+println(mypipe.outputs[1].data)
 println(mypipe.outputs[2].data)
-println(size(mypipe.outputs[2].data))
-
+println(mypipe.outputs[3].data)
 
 # 2. richiedere l'algoritmo a Implementations
 #nsga_algorithm = Implementations.get_algorithm("naive_random_nsga2", myproblem)
