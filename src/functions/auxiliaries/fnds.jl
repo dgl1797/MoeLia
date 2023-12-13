@@ -66,33 +66,34 @@ module fnds
 
 
   
-  function crowding_distance(population::AbstractArray, objectives::Vector{Function} )
+  function crowding_distance(population::AbstractArray, objectives::Vector{Function}, remaining_size::Int)
+    if isempty(population) return population end
+    
     # Number of objectives
-    M = length(population[1].objectives)
-
+    M = size(objectives)[1]
+    
     # Number of individuals
-    N = length(population)
-
+    N = size(population)[1]
+    
     # Initialize crowding distance
-    for individual in population
-        individual.crowding_distance = 0.0
-    end
+    individual = Dict[Dict([("crowd", population[i, :]), ("distance", 0.0)]) for i in 1:N]
 
-    # For each objective function
     for m in 1:M
         # Sort the population by the m-th objective function
-        sort!(population, by = x -> x.objectives[m])
-
+        sort!(individual, by = x -> objectives[m](x["crowd"]))
+      
         # Set the boundary points' crowding distance to infinity
-        population[1].crowding_distance = Inf
-        population[N].crowding_distance = Inf
-
+        individual[1]["distance"] = Inf
+        individual[N]["distance"] = Inf
+      
         # For each remaining individual
         for i in 2:(N-1)
             # Update the crowding distance
-            population[i].crowding_distance += (population[i+1].objectives[m] - population[i-1].objectives[m])
+            individual[i]["distance"] += (objectives[m](individual[i+1]["crowd"]) - objectives[m](individual[i-1]["crowd"]))
         end
     end
+    sort!(individual, by = x -> -x["distance"])
+    return convert(Matrix{Float64}, hcat([individual[i]["crowd"] for i in 1:remaining_size]...)')
   end
 
 end
