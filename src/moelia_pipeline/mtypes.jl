@@ -5,7 +5,8 @@ module MoeliaTypes
       so we access dictionary in order of sorted names array.
     =#
     struct MData
-      data::AbstractArray
+      data::Any
+      type::DataType
     end
 
     struct MPipe

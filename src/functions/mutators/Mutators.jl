@@ -19,7 +19,7 @@ module Mutators
       push!(offspring, mutated_chromosome)
     end
 
-    return offspring = hcat(offspring...)'
+    return convert(Matrix{Float64},hcat(offspring...)')
 
   end
 
