@@ -11,8 +11,15 @@ module Algos
       ("concatenatePQ", (p) -> vcat(filter(x -> !isempty(x), [p,apipeline.inputs[1].data,apipeline.outputs[1].data])...)),
       ("fast_non_dominated_sort", Functions.Auxiliaries.fnds.fast_non_dominated_sort),
       ("filter_frontiers", (f) -> Functions.Auxiliaries.fnds.frontier_filter(f, apipeline.outputs[3].data, pop_size )),
-      ("evaluation", action, params),
-      ("selection", action, params)
+      ("crowding_distance", 
+        (p) -> Functions.Auxiliaries.fnds.crowding_distance(
+          p[2], 
+          problem.objective_functions, 
+          3-size(apipeline.outputs[5].data[1])[1] )
+      ),
+      ("build_final_population", (p) ->
+        vcat(filter(x -> !isempty(x), [ p, mypipe.outputs[5].data[1] ])...)
+      ),
     ], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
 
     return MoeliaAlgoTypes.MAT(

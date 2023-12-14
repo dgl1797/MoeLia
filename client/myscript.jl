@@ -15,15 +15,18 @@ MoeliaPipeline.add_step!(mypipe, "crossover", Functions.Crossovers.single_point,
 MoeliaPipeline.add_step!(mypipe, "mutation", Functions.Mutators.one_position, 0.7, myproblem.bounds)
 MoeliaPipeline.add_step!(mypipe, "concatenatePQ", (p) -> vcat(filter(x -> !isempty(x), [p,mypipe.inputs[1].data,mypipe.outputs[1].data])...))
 MoeliaPipeline.add_step!(mypipe, "FNDS", Functions.Auxiliaries.fnds.fast_non_dominated_sort)
-MoeliaPipeline.add_step!(mypipe, "frontier_filter", (p) -> Functions.Auxiliaries.fnds.frontier_filter(p,mypipe.outputs[3].data, 3))
+MoeliaPipeline.add_step!(mypipe, "frontier_filter", (p) -> Functions.Auxiliaries.fnds.frontier_filter(p,mypipe.outputs[3].data, size(population)[1]))
 MoeliaPipeline.add_step!(
   mypipe, 
   "crowding_distance", 
   (p) -> Functions.Auxiliaries.fnds.crowding_distance(
     p[2], 
     myproblem.objective_functions, 
-    3-size(mypipe.outputs[5].data[1])[1]
+    size(population)[1]-size(mypipe.outputs[5].data[1])[1]
   )
+) 
+MoeliaPipeline.add_step!(mypipe, "build_final_population", (p) -> 
+  vcat(filter(x -> !isempty(x), [ p, mypipe.outputs[5].data[1] ])...)
 )
 
 
@@ -42,6 +45,9 @@ println("-- filt")
 println(mypipe.outputs[5].data)
 println("-- crowd")
 println(mypipe.outputs[6].data)
+println("--final_pop")
+println(mypipe.outputs[7].data)
+
 
 
 # 2. richiedere l'algoritmo a Implementations

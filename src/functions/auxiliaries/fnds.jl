@@ -63,10 +63,11 @@ module fnds
       k <= size(frontiers)[1] ? population[frontiers[k], :] : []
     )
   end
-
+  
 
   
   function crowding_distance(population::AbstractArray, objectives::Vector{Function}, remaining_size::Int)
+    if remaining_size == 0 return [] end
     if isempty(population) return population end
     
     # Number of objectives
