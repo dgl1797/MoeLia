@@ -7,7 +7,10 @@ module MoeliaPipeline
   using MoeLia
   
   function init_pipeline()::MoeliaTypes.MPipe
-    return MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
+    return MoeliaTypes.MPipe(
+      Tuple{String, Function, Any}[],
+      MoeliaTypes.Iteration[]    
+    )
   end
 
   function is_empty(pipe::MoeliaTypes.MPipe)::Bool
@@ -43,7 +46,7 @@ module MoeliaPipeline
     EXAMPLE OF USAGE:\n
   \t mypipe = MoeliaPipeline.init_pipeline()
   \t MoeliaPipeline.add_step!(mypipeline, "mutate", Mutators.classic_mutator)
-  \t MoeliaPipeline.add_step!(mypipeline, "unite", x -> vcat(mypipeline.inputs[1].data, x))
+  \t MoeliaPipeline.add_step!(mypipeline, "unite", x -> vcat(mypipeline.iter[end].inputs[1].data, x))
   \t MoeliaPipeline.add_step!(mypipeline, "core", ResearcherLibrary.my_genetic_algorithm, ResearcherLibrary.myobjective)
   \t MoeliaPipeline.add_step!(mypipeline, "adjustments", (x,param) -> x .+ (1*param), 12)
   \t MoeliaPipeline.inspect(mypipeline)\n
@@ -58,7 +61,7 @@ module MoeliaPipeline
   """
   function inspect(pipe::MoeliaTypes.MPipe, InputType::DataType)::String
     finalString::String = ""
-    PreviousType = [InputType]
+    PreviousType = Type[InputType]
     for (index, (name, action, args)) in enumerate(pipe.mpipe)
       action_name = occursin("#", string(action)) ? "Anonymous Function" : string(action)
       arg_types = "$(join(map(x -> isa(x, Function) ? "Function" : typeof(x), args), ", "))"
@@ -114,7 +117,10 @@ module MoeliaPipeline
     \t
   """
   function clone_pipeline(pipe::MoeliaTypes.MPipe)::MoeliaTypes.MPipe
-    newpipe = MoeliaTypes.MPipe(Vector{Tuple{String, Function, Any}}[], Vector{MoeliaTypes.MData}[], Vector{MoeliaTypes.MData}[])
+    newpipe = MoeliaTypes.MPipe(
+      Vector{Tuple{String, Function, Any}}[], 
+      MoeliaTypes.Iteration[]
+    )
     if is_empty(pipe) return newpipe end
     for (Name, Action, Params) in pipe.mpipe
       push!(newpipe.mpipe, (Name, Action, Params))
@@ -131,10 +137,11 @@ module MoeliaPipeline
     \t
   """
   function run_pipeline(pipe::MoeliaTypes.MPipe, x::Any)::AbstractArray
+    push!(pipe.iter, MoeliaTypes.Iteration(MoeliaTypes.MData[],MoeliaTypes.MData[]))
     for (_, action, args) in pipe.mpipe
-      push!(pipe.inputs, MoeliaTypes.MData(x, typeof(x)))
+      push!(pipe.iter[end].inputs, MoeliaTypes.MData{typeof(x)}(x))
       x = action(x, args...)
-      push!(pipe.outputs, MoeliaTypes.MData(x, typeof(x)))
+      push!(pipe.iter[end].outputs, MoeliaTypes.MData{typeof(x)}(x))
     end
     return x
   end

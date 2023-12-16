@@ -3,7 +3,12 @@ module Mutators
   
   using MoeLia
 
-  function one_position(population::AbstractArray, mutation_rate::Float64, bounds::Vector{Tuple{<: Real, <: Real}})::AbstractArray
+  function one_position(
+    population::AbstractArray, 
+    uniques_set::Set{Vector{Float64}},
+    mutation_rate::Float64, 
+    bounds::Vector{Tuple{<: Real, <: Real}}
+  )::AbstractArray
     if isempty(population) return population end
     if mutation_rate < 0 || mutation_rate > 1 throw("invalid mutation rate, it has to be a probability in [0,1]") end
     (pop_size, nvar) = size(population)
@@ -16,7 +21,10 @@ module Mutators
       mutated_value = lb + rand(Float64) * (hb - lb)
       mutated_chromosome = population[i, :]
       mutated_chromosome[mutated_index] = mutated_value
-      push!(offspring, mutated_chromosome)
+      if !(mutated_chromosome in uniques_set)
+        push!(uniques_set, mutated_chromosome)
+        push!(offspring, mutated_chromosome)
+      end
     end
 
     return convert(Matrix{Float64},hcat(offspring...)')

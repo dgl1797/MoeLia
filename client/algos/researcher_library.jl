@@ -9,9 +9,7 @@ module ResearcherLibrary
     return 1-exp(-sum([(x+1/sqrt(nvar))^2 for x in chromosome]))
   end
 
-  function my_genetic_algorithm(population::Vector{Float64}, objective::Function)::Array{Float64, 5}
-    fitness = objective(population)
-    fitness = sort(fitness)
-    return fitness[1:5]
+  function stop_criteria(current_iteration, max_iteration)::Bool
+    return current_iteration <= max_iteration
   end
 end

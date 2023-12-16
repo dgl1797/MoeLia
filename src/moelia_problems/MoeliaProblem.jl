@@ -6,7 +6,7 @@ module MoeliaProblem
     return MoeliaProblemTypes.MPT(
       Vector{Function}(undef, NOBJ),
       Vector{Tuple{<: Real,<: Real}}(undef, NVAR),
-      MoeliaProblemTypes.MPTParams(NVAR,-1)
+      MoeliaProblemTypes.MPTParams(NVAR, ()->false, (), false, false)
     )
   end
 
@@ -23,7 +23,21 @@ module MoeliaProblem
     problem.params.nvar = length(problem.bounds)
   end
 
-  function set_niterations!(problem::MoeliaProblemTypes.MPT, n::Int64)
-    problem.params.max_iteration = n > 0 ? n : throw("invalid number of iterations")
+  function set_criteria!(
+    problem::MoeliaProblemTypes.MPT, 
+    new_validator::Function, 
+    with_population::Bool=false,
+    with_iterations::Bool=true,
+    new_params...
+  )
+    
+    if Base.return_types(new_validator)[1] != Bool
+      throw("Criteria validator must be a function returning a boolean and a boolean only")
+    end
+
+    problem.params.criteria = new_validator
+    problem.params.crequires_pop = with_population
+    problem.params.crequires_it = with_iterations
+    problem.params.cparams = new_params
   end
 end
