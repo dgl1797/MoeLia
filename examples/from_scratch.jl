@@ -41,6 +41,14 @@ println("Best population from original algorithm:\n$final_population\n----------
 new_pipeline = MoeliaPipeline.clone_pipeline(myalgo.algorithm_pipeline)
 MoeliaPipeline.substitute!(new_pipeline, "crossover", "mod_cross", Functions.Crossovers.single_point, 0.9 )
 MoeliaPipeline.substitute!(new_pipeline, 2 , "mod_mut", ResearcherLibrary.unpack_mutator, 0.8)
+MoeliaPipeline.add_step!(new_pipeline, 3 , "new_step", 
+(p) ->
+  begin
+    println(p)
+    p
+  end
+)
+MoeliaPipeline.delete_step!(new_pipeline, "new_step")
 MoeliaAlgorithm.set_algorithm_pipeline!(myalgo, new_pipeline)
 println(MoeliaPipeline.inspect(myalgo.algorithm_pipeline, Matrix{Float64}))
 
