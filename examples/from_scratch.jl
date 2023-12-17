@@ -25,7 +25,7 @@ MoeliaPipeline.add_step!(
   "concatenate", 
   (p) -> vcat(filter(x -> !isempty(x), [
     p, 
-    # Always reference to 
+    # Always reference to algorithm's pipeline
     myalgo.algorithm_pipeline.iter[end].inputs[1].data,
     myalgo.algorithm_pipeline.iter[end].outputs[1].data[1]
   ])...)
