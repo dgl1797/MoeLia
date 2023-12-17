@@ -36,6 +36,22 @@ module MoeliaPipeline
     push!(pipe.mpipe, (name, action, action_args))
   end
 
+  function add_step!(pipe::MoeliaTypes.MPipe, index::Int, name::String, action::Function, action_args...)
+    if index < 0 || index > size(pipe.mpipe)[1] throw("index not valid") end 
+    insert!(pipe.mpipe, index, (name, action, action_args))
+  end
+
+  function delete_step!(pipe::MoeliaTypes.MPipe, index::Union{Int,String})
+    if typeof(index) == Int && (index < 0 || index > size(pipe.mpipe)[1]) throw("index not valid") end
+    if typeof(index) == String 
+      index = (
+        index == "end" 
+          ? size(pipe.mpipe)[1] 
+          : (index == "start" ? 1 : findfirst(x -> x[1] == index, pipe.mpipe))
+      ) 
+    end
+    deleteat!(pipe.mpipe,index) 
+  end
   """
   Views the entire pipeline of actions, giving the ordering and the naming, so that new elements can be accessed/substituted
   signularly using either the index or the name of the step. It also inspects the types to each action, if it is not specified
