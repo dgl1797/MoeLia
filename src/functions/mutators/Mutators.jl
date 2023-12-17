@@ -9,7 +9,7 @@ module Mutators
     \t@arg population::AbstractArray
     \t@arg uniques_set::Set{Vector{Float64}} #Set used to avoid individual duplication, often passed by crossover operator
     \t@arg mutation_rate::Float64
-    \t@arg bounds::Vector{Tuple{<: Real, <: Real}} #bounds used to generate mutated chromosome between a predifined range
+    \t@arg bounds::Vector{Tuple{<: Real, <: Real}} #bounds used to generate mutated chromosomes between a predifined range
     PRODUCES:\n
     \t@arg offspring::Matrix{Float64} 
     \t

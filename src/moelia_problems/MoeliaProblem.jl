@@ -54,6 +54,8 @@ module MoeliaProblem
     \t@arg with_population::Bool=false #if criteria requires population as input   
     \t@arg with_iterations::Bool=true #if criteria requires iteration as input 
     \t@arg new_params::Tuple{Any} #optional parameters
+    THROWS:\n
+    \t@error "Criteria validator must be a function returning a boolean and a boolean only"
     \t
   """
   function set_criteria!(

@@ -10,6 +10,7 @@ module MoeliaPipeline
     Generator function that instantiates a new `MoeliaTypes.MPipe` object\n
     **PRODUCES**\n
     \t@arg pipeline::MoeliaTypes.MPipe # empty pipeline
+    \t
   """
   function init_pipeline()::MoeliaTypes.MPipe
     return MoeliaTypes.MPipe(
@@ -26,7 +27,7 @@ module MoeliaPipeline
   end
 
   """
-    pushes a new action to be performed in the pipeline. Actions are executed in the same order they are inserted
+    Pushes a new action to be performed in the pipeline. Actions are executed in the same order they are inserted
     and their output type needs to be coherent with the next step's input type\n
     **REQUIRES**\n
     \t@arg pipe::MoeliaTypes.MPipe # the pipeline where to push the new step
@@ -37,13 +38,13 @@ module MoeliaPipeline
     **EXAMPLE OF USAGE**\n
     \tmypipe = MoeliaPipeline.init_pipeline()
     \tMoeliaPipeline.add_step!(mypipe, "step1", first_action, config_param1, config_param2, ...)
-    notice that first_action is any functionality that takes a single input + some configuration parameters and returns a
+    Notice that first_action is any functionality that takes a single input + some configuration parameters and returns a
     single output which is the elaborated input. Alternatively anonymous functions can be used to access inputs/outputs
     of other steps' in the pipeline\n
     \tmypipe = MoeliaPipeline.init_pipeline()
     \tMoeliaPipeline.add_step!(mypipe, "step1", first_action, config_param1, config_param2, ...)
     \tMoeliaPipeline.add_step!(mypipe, "step2", (population) -> population .* mypipe.iter[end].inputs[1].data)
-    in this case `iter[end]` represents the data collected during the last iteration of the run while `inputs[1].data` is the
+    In this case `iter[end]` represents the data collected during the last iteration of the run while `inputs[1].data` is the
     input of the first step, same can be done with `mypipe.iter[end].outputs[1].data`\n
   """
   function add_step!(pipe::MoeliaTypes.MPipe, name::String, action::Function, action_args...)
@@ -179,7 +180,7 @@ module MoeliaPipeline
   end
 
   """
-    runs all steps of a configured pipeline once\n
+    Runs all steps of a configured pipeline once\n
     **REQUIRES**\n
     \t@arg pipeline::MoeliaTypes.MPipe
     \t@arg startingInputs::MoeliaTypes.MInputs # inputs that will be forwarded through the pipeline

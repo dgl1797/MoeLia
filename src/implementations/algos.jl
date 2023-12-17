@@ -1,4 +1,7 @@
 export Algos
+"""
+Module exporting CORE algorithms using a String to Function mapping 
+"""
 module Algos
 
   using MoeLia
@@ -21,7 +24,7 @@ module Algos
       problem,
       pop_size
     )
-    #initialize the algorithm's pipeline with predefined NSGA-II actions
+    #initialize the algorithm's pipeline with predefined NSGA-II steps
     algorithm.algorithm_pipeline = MoeliaTypes.MPipe(Tuple{String, Function, Any}[
       ("crossover", Functions.Crossovers.single_point, (0.6,)),
       ("mutation", (p) -> Functions.Mutators.one_position(p[1], p[2], 0.5, problem.bounds), ()),

@@ -8,7 +8,7 @@ export MoeliaTypes
   \t@arg inputs::Vector{MData} # vector of MData inputs for this iteration
   \t@arg outputs::Vector{MData} # vector of MData outputs for this iteration
   **MData{T} Struct**\n
-  \t@arg data::T # data of the iter[i].inputs[j] or iter[i].outputs[j] of type T
+  \t@arg data::T # data of the i-th iteration and j-th step : iter[i].inputs[j] or iter[i].outputs[j] of type T
 """
 module MoeliaTypes
 

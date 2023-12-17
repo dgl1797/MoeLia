@@ -7,7 +7,7 @@ module Populators
   using MoeLia
   
   """
-    naive random initializer that takes bounds of a problem and generates a random population within those bounds\n
+    Naive random initializer that takes bounds of a problem and generates a random population within those bounds\n
     **REQUIRES**\n
     \t@arg problem::MoeLia.MoeliaProblemTypes.MPT
     \t@arg pop_size::Int

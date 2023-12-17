@@ -16,7 +16,7 @@ module ResearcherLibrary
   """
   Return a Boolean to check if the algorithm can continue \n
   _IMPORTANT_
-  \t the current_iteration::Int must be the first argument while the max_iteration::Int the second one
+  \t the function is valid for the library because it returns a Boolean and it doesn't require population after iteration 
   """
   function stop_criteria(current_iteration, max_iteration)::Bool
     return current_iteration <= max_iteration

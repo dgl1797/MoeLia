@@ -1,10 +1,13 @@
 export Implementations
+"""
+Module exporting APIs for algorithm Implementation usage
+"""
 module Implementations
   
   using MoeLia
 
   """
-  Allows to get in a direct way preexisting algorithms exposed through algos Dictionary .\n
+  Allow to get in a direct way preexisting algorithms exposed through algos Dictionary .\n
     REQUIRERS:\n
     \t@arg name::String #name of the algorithm to search
     \t@arg problem::MoeliaProblemTypes.MPT #problem to be passed to the algorithm
