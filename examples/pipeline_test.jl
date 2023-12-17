@@ -1,7 +1,7 @@
 include("../src/MoeLia.jl")
 using .MoeLia
 
-include("./algos/researcher_library.jl")
+include("./researcher_lib/researcher_library.jl")
 
 # Constants Definition
 MAX_IT = 150

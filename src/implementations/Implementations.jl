@@ -8,9 +8,4 @@ module Implementations
     return required_implementation == undef ? throw("Algorithm $name not found") : required_implementation(problem, pop_size)
   end
 
-  function set_populator_params!(algo::MoeliaAlgoTypes.MAT, params::Any)
-    algo.initializer_parameters = params
-  end
-
-
 end
