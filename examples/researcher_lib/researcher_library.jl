@@ -81,7 +81,7 @@ module ResearcherLibrary
       # For each individual in the population and for each objective compute the fitness of the individual for that objective.
       for i in 1:pop_size
         for j in 1:Nobj
-          fitnesses[i][j] = objectivesj
+          fitnesses[i][j] = objectives[j](population[i,:])
         end
       end
   
