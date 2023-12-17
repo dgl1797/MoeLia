@@ -1,8 +1,20 @@
-export fnds 
+export fnds
+"""
+  Module containing all functionalities to implement fast-non-dominated-sort of NSGA-II
+"""
 module fnds
 
+  """
+    fast non dominated sort for NSGA-II algorithm.\n
+    **REQUIRES**\n
+    \t@arg population::Matrix{Float}
+    **PRODUCES**\n
+    \t@arg frontiers::Vector{Vector{Int}}
+    \t
+  """
   function fast_non_dominated_sort(population)
     # Initialize domination count and dominated solutions for each solution
+    
     S = [Set() for _ in 1:size(population)[1]] #ordered set containing for each i-th cell the individuals dominated by the i-th one 
     n = zeros(Int, size(population)[1]) #domination count, number of individuals that dominate the i-th one 
     rank = zeros(Int, size(population)[1]) #array in which each i-th cell corresponds to the rank/frontier of i-th ind.
@@ -33,9 +45,10 @@ module fnds
     # Generate subsequent fronts
     i = 1
     while size(F[i])[1] != 0
-        Q = Int[]
+        Q = Int[] # current front constructor
         for p in F[i]
             for q in S[p]
+              # p is now extracted hence each q in S[p] decrease their dominated count
                 n[q] -= 1
                 if n[q] == 0
                     rank[q] = i + 1
@@ -44,15 +57,27 @@ module fnds
             end
         end
         i += 1
-        if isempty(Q) break end
+        if isempty(Q) break end # last frontier will be empty and works as stop condition
         push!(F, Q)
     end
     return F
   end
   
+  """
+    filters the population based on the received frontiers from `fast_non_dominated_sort` in NSGA-II\n
+    **REQUIRES**\n
+    \t@arg frontiers::Vector{Vector{Int}} # containing the indexes of population for each frontier
+    \t@arg population::Matrix{Float64}
+    \t@arg pop_size::Int
+    **PRODUCES**\n
+    \t@arg filtered_population::Matrix{Float64}
+    \t@arg last_frontier::Matrix{Float64} # containing the elements of population for the last frontier to be crowd_sorted
+    _produced arguments are returned as a tuple_
+  """
   function frontier_filter(frontiers::Vector{Vector{Int}},population::AbstractArray,pop_size::Int)
     next_batch = Vector{Float64}[]
     k = 1
+    # 
     while k <= size(frontiers)[1]
       if size(next_batch)[1] + size(frontiers[k])[1] > pop_size break end
       [push!(next_batch, population[cs, :]) for cs in frontiers[k]]
@@ -64,8 +89,16 @@ module fnds
     )
   end
   
-
-  
+  """
+    sorts the remaining frontier's elements to distribute extracted solutions as much as possible in NSGA-II\n
+    **REQUIRES**\n
+    \t@arg population::Matrix{Float64} # of elements composing last frontier
+    \t@arg objectives::Vector{Function} # objective function to evaluate the crowding distance based on fitness
+    \t@arg remaining_size::Int = (pop_size - size(filtered_population))
+    **PRODUCES**\n
+    \t@arg selected_individuals::Matrix{Float64}
+    \t
+  """
   function crowding_distance(population::AbstractArray, objectives::Vector{Function}, remaining_size::Int)
     if remaining_size == 0 return [] end
     if isempty(population) return population end

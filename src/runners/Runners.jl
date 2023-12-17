@@ -1,8 +1,20 @@
 export Runners
+"""
+  Module implementing the main loops executing and handling iterations of Moelia Pipelines
+"""
 module Runners
 
   using MoeLia
 
+  """
+    Initializes the population exploiting algorithm.population_initializer(algorithm.initializer_parameters...) and
+    runs the loop while MoeliaAlgorithm.validate_criteria(population, current_iteration, problem) is true\n
+    **REQUIRES**\n
+    \t@arg algorithm::MoeliaAlgoTypes.MAT
+    **PRODUCES**\n
+    \t@arg final_population::Matrix{Float64}
+    \t
+  """
   function basic_runner(algorithm::MoeliaAlgoTypes.MAT)::AbstractArray
     population = algorithm.population_initializer(algorithm.initializer_parameters...)
     current_iteration = 1
@@ -13,6 +25,17 @@ module Runners
     return population
   end
 
+  """
+    Initializes the population exploiting algorithm.population_initializer(algorithm.initializer_parameters...) and
+    runs the loop while MoeliaAlgorithm.validate_criteria(population, current_iteration, problem) is true, printing 
+    the final population once every `every` executions\n
+    **REQUIRES**\n
+    \t@arg algorithm::MoeliaAlgoTypes.MAT
+    \t@arg every::Int @default(1) # printing frequency
+    **PRODUCES**\n
+    \t@arg final_population::Matrix{Float64}
+    \t
+  """
   function verbose_runner(algorithm::MoeliaAlgoTypes.MAT, every::Int=1)::AbstractArray
     population = algorithm.population_initializer(algorithm.initializer_parameters...)
     current_iteration = 1
