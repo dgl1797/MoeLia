@@ -3,13 +3,17 @@ module Algos
 
   using MoeLia
 
-  function checkpoint(p::AbstractArray, name::String)
-    println("[CHECKPOINT: $name]\n$p\n---------")
-    return p
-  end
-
+  """
+  NSGA-II algorithm .\n
+    REQUIRERS:\n
+    \t@arg problem::MoeliaProblemTypes.MPT
+    \t@arg pop_size::Int64
+    PRODUCES:\n
+    \t@arg algorithm::MoeliaAlgoTypes.MAT
+    \t
+  """
   function nr_nsga2(problem::MoeliaProblemTypes.MPT, pop_size::Int64)::MoeliaAlgoTypes.MAT
-    
+    #initialize the algorithm with an empty pipeline, the input's parameters and a random Populator initializer
     algorithm = MoeliaAlgoTypes.MAT(
       Functions.Populators.random_initializer,
       (problem, pop_size),
@@ -17,10 +21,11 @@ module Algos
       problem,
       pop_size
     )
-
+    #initialize the algorithm's pipeline with predefined NSGA-II actions
     algorithm.algorithm_pipeline = MoeliaTypes.MPipe(Tuple{String, Function, Any}[
       ("crossover", Functions.Crossovers.single_point, (0.6,)),
       ("mutation", (p) -> Functions.Mutators.one_position(p[1], p[2], 0.5, problem.bounds), ()),
+      #the anonymous function allows to access to the previously steps' inputs/outputs  
       ("concatenatePQ", 
         (p) -> vcat(filter(
           x -> !isempty(x), 
@@ -48,7 +53,7 @@ module Algos
     return algorithm
 
   end
-
+  #Dictionary exposed to access in a direct way to the existing algorithm 
   MoeliaImplementations = Dict{String, Function}([
     ("naive_random_nsga2", nr_nsga2)
   ])
