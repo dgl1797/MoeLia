@@ -43,7 +43,7 @@ Currently composed by:
 Component exposing the fully implemented MATs (MoeLia Algorithm Types) via a Dictionary implemented in algos.jl . <br>
 It actually contains the following modules:
 
-- Algos : implements MATs and expose those through a Dictionary
+- Algos : implements MATs and exposes those through a Dictionary
 - Implementations : exposes APIs to access the Dictionary
 
 ### APIs
