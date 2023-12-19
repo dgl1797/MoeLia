@@ -59,9 +59,9 @@ By convention the files exposing the APIs are named with Pascal case.<br>
     - number of population
     - ...
   - MPT
-    - objective functions served as a vector
-    - bounds consisting of a vector
-    - params for optional parameters
+    - objective functions : served as a vector of Function Julia type
+    - bounds : consisting of a vector of Tuples where the first element represents the lower bound and the second the upper one 
+    - params : for optional parameters
 
 - MoeLia algorithms : logical component exposing the MAT (MoeLia Algorithm Type) that allows to define several parameters related to itself.
 
