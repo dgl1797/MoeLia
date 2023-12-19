@@ -1,6 +1,6 @@
 # <center>MoeLia Suite</center>
 
-**Multi-Objective Evolutionary** Ju**Li*Algorithms*** project emerged with the goal of offering a suite for MOEAs (Multi-Objective Evolutionary Algorithms) where it is possible to utilize not just existing codes and implementations, but develop custom code to integrate it into the MoeLia Suite, following a straightforward and well-documented modular approach.
+**Multi-Objective Evolutionary** Ju**Li*A_lgorithms*** project emerged with the goal of offering a suite for MOEAs (Multi-Objective Evolutionary Algorithms) where it is possible to utilize not just existing codes and implementations, but develop custom code to integrate it into the MoeLia Suite, following a straightforward and well-documented modular approach.
 
 ## Getting Started
 
