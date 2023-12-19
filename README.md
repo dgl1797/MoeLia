@@ -23,10 +23,10 @@ After forking and cloning locally the repository, the Julia's Pkg manager can be
 This section give a brief description of the implementation logic of the suite in order to make that readible and comprehensible.
 The Suite is composed by three core components:
 
-- Functions componente per le funzionalità
-- Implementations vari algoritmi completi compresi di pipeline e pronti all'uso
+- Functions
+- Implementations
 - APIs exposed by moelia\_\*
-- Runners funzionalità per runnare gli algoritmi
+- Runners
 
 ### Functions
 
