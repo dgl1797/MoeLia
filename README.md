@@ -89,7 +89,7 @@ By convention the files exposing the APIs are named with Pascal case.<br>
 
 ### Runners
 
-Exposes several versions of the running loop for the Multi-Objective evolutionary algorithm, to be specific a basic version and a verbose version allowing to see details about input/output data.
+Exposes several versions of the running loop for the Multi-Objective Evolutionary Algorithms, to be specific a basic version and a verbose version allowing to see details about input/output data.
 
 ### Development Flow
 
