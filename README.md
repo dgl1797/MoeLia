@@ -94,6 +94,8 @@ Exposes several versions of the running loop for the Multi-Objective evolutionar
 
 ### Development Flow
 
+![flow](./documentation%20sources/DiagramFlow.svg)
+
 ## How to develop using MoeLia
 
 ## How to enhance the suite
