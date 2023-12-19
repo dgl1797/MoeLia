@@ -16,8 +16,7 @@ After the cloning you can use the package thanks to `using MoeLia`
 
 ### Local Forking for Suite Development
 
-After forking and cloning locally the repository, the Julia's Pkg manager can be used through `using Pkg` you can run `Pkg.develop(PackageSpec(path="relative/path/to/MoeLia/"))` and only then use the suite's Package thanks to `using MoeLia`.<br>
-The advantage is the possibility to change the MoeLia Project code.
+After forking and cloning locally the repository, the Julia's Pkg manager can be used through `using Pkg` for then running `Pkg.develop(PackageSpec(path="relative/path/to/MoeLia/"))` to allow the usage of the suite's Package as well as having the advantage of enhancing the MoeLia code.
 
 ## Business Logic
 
