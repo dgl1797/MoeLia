@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-Actually the project is available to use only Julia Pkg or through git.
+Actually the project is available to be used only via Julia Pkg or Git.
 
 [github repository](https://github.com/dgl1797/MoeLia.git)
 
