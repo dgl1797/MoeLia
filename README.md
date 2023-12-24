@@ -21,7 +21,7 @@ After forking and cloning locally the repository, the Julia's Pkg manager can be
 ## Business Logic
 
 This section give a brief description of the implementation logic of the suite in order to make that readible and comprehensible.
-The Suite is composed by three core components:
+The Suite is composed by four core components:
 
 - Functions
 - Implementations
