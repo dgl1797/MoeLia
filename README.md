@@ -135,7 +135,7 @@ MoeLia actually requires Random and Dates as dependencies. If more are to be add
 
 ### Disable Run History
 
-Implement a functionality in the MoeliaPipeline and Runner modalities to disable input/output history entirely or partially, tracking only specific iterations. This can be achieved by creating a version of ☺`run_pipeline` with a `disable_history` parameter, preventing data from being pushed. Subsequently, a runner version with the same `disable_history` parameter should be implemented. This runner will execute the original `run_pipeline` at the beginning and end, while using the `disable_history` version for the remaining steps.
+Implement a functionality in the MoeliaPipeline and Runner modalities to disable input/output history entirely or partially, tracking only specific iterations. This can be achieved by creating a version of `run_pipeline` with a `disable_history` parameter, preventing data from being pushed. Subsequently, a runner version with the same `disable_history` parameter should be implemented. This runner will execute the original `run_pipeline` at the beginning and end, while using the `disable_history` version for the remaining steps.
 
 ### Plotting Functionality
 
