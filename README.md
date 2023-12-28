@@ -130,3 +130,14 @@ As mentioned, the package is meant to be easily extensible and modifiable, for t
 ## Dependencies
 
 MoeLia actually requires Random and Dates as dependencies. If more are to be added use `Pkg.add` after the package activation to also include them in the `.toml` files of the suite in order to be used with the `using` keyword in external files.
+
+## Future Implement
+
+### Disable Run History
+
+Implementation of a functionality in the MoeliaPipeline and consequently on the Runner modalities that allow for disabling input/output history completely as well as a less restricting functionality that keeps track of specific iterations' inputs and outputs.
+To implement such functionality it should be enough to implement a `run_pipeline` version with a `disable_history` parameter in which data are not pushed, for then implementing a runner version with the same `disable_history` that will run the original version of `run_pipeline` in the first and last steps for then only running the `disable_history` version.
+
+### Plotting Functionality
+
+As in the actual state, the library only allows for plotting by introducing a step in the pipeline or a version of a runner function that introduces the last population's plotting. A possible future implementation for the Library could be to incorporate a built-in way to plot results by exploiting external packages like [Plots](https://docs.juliaplots.org/stable/).
