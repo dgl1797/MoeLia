@@ -139,4 +139,6 @@ Implement a functionality in the MoeliaPipeline and Runner modalities to disable
 
 ### Plotting Functionality
 
-As in the actual state, the library only allows for plotting by introducing a step in the pipeline or a version of a runner function that introduces the last population's plotting. A possible future implementation for the Library could be to incorporate a built-in way to plot results by exploiting external packages like [Plots](https://docs.juliaplots.org/stable/).
+As in the actual state, the library only allows for plotting by introducing a step in the pipeline or a version of a runner function that introduces the last population's plotting. A possible future implementation for the Library could be to incorporate a built-in way to plot results by exploiting external packages like [Plots](https://docs.juliaplots.org/stable/) that could be integrated with other packages for handling better data visualization and 3D shapes like: 
+- [CalculusWithJulia](https://jverzani.github.io/CalculusWithJuliaNotes.jl/)
+- Contour which is integrated with the latest versions of Julia Plots.
