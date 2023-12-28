@@ -131,7 +131,7 @@ As mentioned, the package is meant to be easily extensible and modifiable, for t
 
 MoeLia actually requires Random and Dates as dependencies. If more are to be added use `Pkg.add` after the package activation to also include them in the `.toml` files of the suite in order to be used with the `using` keyword in external files.
 
-## Future Implement
+## Future Implementations
 
 ### Disable Run History
 
