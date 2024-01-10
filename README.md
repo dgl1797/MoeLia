@@ -21,7 +21,7 @@ After forking and cloning locally the repository, the Julia's Pkg manager can be
 ## Business Logic
 
 This section give a brief description of the implementation logic of the suite in order to make that readible and comprehensible.
-The Suite is composed by three core components:
+The Suite is composed by four core components:
 
 - Functions
 - Implementations
@@ -130,3 +130,15 @@ As mentioned, the package is meant to be easily extensible and modifiable, for t
 ## Dependencies
 
 MoeLia actually requires Random and Dates as dependencies. If more are to be added use `Pkg.add` after the package activation to also include them in the `.toml` files of the suite in order to be used with the `using` keyword in external files.
+
+## Future Implementations
+
+### Disable Run History
+
+Implement a functionality in the MoeliaPipeline and Runner modalities to disable input/output history entirely or partially, tracking only specific iterations. This can be achieved by creating a version of `run_pipeline` with a `disable_history` parameter, preventing data from being pushed. Subsequently, a runner version with the same `disable_history` parameter should be implemented. This runner will execute the original `run_pipeline` at the beginning and end, while using the `disable_history` version for the remaining steps.
+
+### Plotting Functionality
+
+As in the actual state, the library only allows for plotting by introducing a step in the pipeline or a version of a runner function that introduces the last population's plotting. A possible future implementation for the Library could be to incorporate a built-in way to plot results by exploiting external packages like [Plots](https://docs.juliaplots.org/stable/) that could be integrated with other packages for handling better data visualization and 3D shapes like: 
+- [CalculusWithJulia](https://jverzani.github.io/CalculusWithJuliaNotes.jl/)
+- Contour which is integrated with the latest versions of Julia Plots.
